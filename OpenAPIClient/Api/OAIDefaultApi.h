@@ -55,12 +55,43 @@ extern NSInteger kOAIDefaultApiMissingParamErrorCode;
 ///
 /// 
 ///  code:200 message:"Query executed succesfully.",
-///  code:204 message:"No projects created yet.",
 ///  code:401 message:"You don't have authorization to get the model list."
 ///
-/// @return void
+/// @return NSString*
 -(NSURLSessionTask*) getModelsListWithCompletionHandler: 
-    (void (^)(NSError* error)) handler;
+    (void (^)(NSString* output, NSError* error)) handler;
+
+
+/// Index by Using Image URL
+/// Index by Using Image URL
+///
+/// @param modelId Model ID
+/// @param imageUrl Image URL
+/// 
+///  code:200 message:"Image Indexed",
+///  code:400 message:"Bad request, parameter or format error. Please check your query, image format and image size.",
+///  code:401 message:"You are not authorized for this operation."
+///
+/// @return NSString*
+-(NSURLSessionTask*) indexByImageUrlWithModelId: (NSString*) modelId
+    imageUrl: (NSString*) imageUrl
+    completionHandler: (void (^)(NSString* output, NSError* error)) handler;
+
+
+/// Index Local Image
+/// Index Local Image
+///
+/// @param modelId Model ID
+/// @param file  (optional)
+/// 
+///  code:200 message:"Image Indexed",
+///  code:400 message:"Bad request, parameter or format error. Please check your query, image format and image size.",
+///  code:401 message:"You are not authorized for this operation."
+///
+/// @return NSString*
+-(NSURLSessionTask*) indexImageWithModelId: (NSString*) modelId
+    file: (NSURL*) file
+    completionHandler: (void (^)(NSString* output, NSError* error)) handler;
 
 
 /// Tag Image by Using Image Url

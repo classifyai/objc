@@ -42,6 +42,7 @@ Import the following:
 #import <OpenAPIClient/OAIDefaultConfiguration.h>
 // load models
 #import <OpenAPIClient/OAIInlineObject.h>
+#import <OpenAPIClient/OAIInlineObject1.h>
 // load API classes for accessing endpoints
 #import <OpenAPIClient/OAIDefaultApi.h>
 
@@ -81,13 +82,15 @@ OAIDefaultApi *apiInstance = [[OAIDefaultApi alloc] init];
 
 ## Documentation for API Endpoints
 
-All URIs are relative to *http://localhost*
+All URIs are relative to *https://api.classifyai.com*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
 *OAIDefaultApi* | [**createNewModel**](docs/OAIDefaultApi.md#createnewmodel) | **PUT** /models | Create New Model
 *OAIDefaultApi* | [**deleteModel**](docs/OAIDefaultApi.md#deletemodel) | **DELETE** /models | Delete Model
 *OAIDefaultApi* | [**getModelsList**](docs/OAIDefaultApi.md#getmodelslist) | **GET** /models | Get Models List
+*OAIDefaultApi* | [**indexByImageUrl**](docs/OAIDefaultApi.md#indexbyimageurl) | **GET** /index_by_image_url | Index by Using Image URL
+*OAIDefaultApi* | [**indexImage**](docs/OAIDefaultApi.md#indeximage) | **POST** /index_image | Index Local Image
 *OAIDefaultApi* | [**tagImageByUrl**](docs/OAIDefaultApi.md#tagimagebyurl) | **GET** /predict_by_image_url | Tag Image by Using Image Url
 *OAIDefaultApi* | [**tagLocalImage**](docs/OAIDefaultApi.md#taglocalimage) | **POST** /predict | Predict by Image
 *OAIDefaultApi* | [**updateModel**](docs/OAIDefaultApi.md#updatemodel) | **POST** /models | Update Model
@@ -96,6 +99,7 @@ Class | Method | HTTP request | Description
 ## Documentation For Models
 
  - [OAIInlineObject](docs/OAIInlineObject.md)
+ - [OAIInlineObject1](docs/OAIInlineObject1.md)
 
 
 ## Documentation For Authorization

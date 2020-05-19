@@ -1,12 +1,14 @@
 # OAIDefaultApi
 
-All URIs are relative to *http://localhost*
+All URIs are relative to *https://api.classifyai.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**createNewModel**](OAIDefaultApi.md#createnewmodel) | **PUT** /models | Create New Model
 [**deleteModel**](OAIDefaultApi.md#deletemodel) | **DELETE** /models | Delete Model
 [**getModelsList**](OAIDefaultApi.md#getmodelslist) | **GET** /models | Get Models List
+[**indexByImageUrl**](OAIDefaultApi.md#indexbyimageurl) | **GET** /index_by_image_url | Index by Using Image URL
+[**indexImage**](OAIDefaultApi.md#indeximage) | **POST** /index_image | Index Local Image
 [**tagImageByUrl**](OAIDefaultApi.md#tagimagebyurl) | **GET** /predict_by_image_url | Tag Image by Using Image Url
 [**tagLocalImage**](OAIDefaultApi.md#taglocalimage) | **POST** /predict | Predict by Image
 [**updateModel**](OAIDefaultApi.md#updatemodel) | **POST** /models | Update Model
@@ -123,7 +125,7 @@ void (empty response body)
 # **getModelsList**
 ```objc
 -(NSURLSessionTask*) getModelsListWithCompletionHandler: 
-        (void (^)(NSError* error)) handler;
+        (void (^)(NSString* output, NSError* error)) handler;
 ```
 
 Get Models List
@@ -145,7 +147,10 @@ OAIDefaultApi*apiInstance = [[OAIDefaultApi alloc] init];
 
 // Get Models List
 [apiInstance getModelsListWithCompletionHandler: 
-          ^(NSError* error) {
+          ^(NSString* output, NSError* error) {
+                        if (output) {
+                            NSLog(@"%@", output);
+                        }
                         if (error) {
                             NSLog(@"Error calling OAIDefaultApi->getModelsList: %@", error);
                         }
@@ -157,7 +162,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-void (empty response body)
+**NSString***
 
 ### Authorization
 
@@ -166,6 +171,128 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **indexByImageUrl**
+```objc
+-(NSURLSessionTask*) indexByImageUrlWithModelId: (NSString*) modelId
+    imageUrl: (NSString*) imageUrl
+        completionHandler: (void (^)(NSString* output, NSError* error)) handler;
+```
+
+Index by Using Image URL
+
+Index by Using Image URL
+
+### Example 
+```objc
+OAIDefaultConfiguration *apiConfig = [OAIDefaultConfiguration sharedConfig];
+
+// Configure API key authorization: (authentication scheme: x-api-key)
+[apiConfig setApiKey:@"YOUR_API_KEY" forApiKeyIdentifier:@"x-api-key"];
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+//[apiConfig setApiKeyPrefix:@"Bearer" forApiKeyIdentifier:@"x-api-key"];
+
+
+NSString* modelId = @"modelId_example"; // Model ID
+NSString* imageUrl = @"imageUrl_example"; // Image URL
+
+OAIDefaultApi*apiInstance = [[OAIDefaultApi alloc] init];
+
+// Index by Using Image URL
+[apiInstance indexByImageUrlWithModelId:modelId
+              imageUrl:imageUrl
+          completionHandler: ^(NSString* output, NSError* error) {
+                        if (output) {
+                            NSLog(@"%@", output);
+                        }
+                        if (error) {
+                            NSLog(@"Error calling OAIDefaultApi->indexByImageUrl: %@", error);
+                        }
+                    }];
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **modelId** | **NSString***| Model ID | 
+ **imageUrl** | **NSString***| Image URL | 
+
+### Return type
+
+**NSString***
+
+### Authorization
+
+[x-api-key](../README.md#x-api-key)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **indexImage**
+```objc
+-(NSURLSessionTask*) indexImageWithModelId: (NSString*) modelId
+    file: (NSURL*) file
+        completionHandler: (void (^)(NSString* output, NSError* error)) handler;
+```
+
+Index Local Image
+
+Index Local Image
+
+### Example 
+```objc
+OAIDefaultConfiguration *apiConfig = [OAIDefaultConfiguration sharedConfig];
+
+// Configure API key authorization: (authentication scheme: x-api-key)
+[apiConfig setApiKey:@"YOUR_API_KEY" forApiKeyIdentifier:@"x-api-key"];
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+//[apiConfig setApiKeyPrefix:@"Bearer" forApiKeyIdentifier:@"x-api-key"];
+
+
+NSString* modelId = @"modelId_example"; // Model ID
+NSURL* file = [NSURL fileURLWithPath:@"/path/to/file"]; //  (optional)
+
+OAIDefaultApi*apiInstance = [[OAIDefaultApi alloc] init];
+
+// Index Local Image
+[apiInstance indexImageWithModelId:modelId
+              file:file
+          completionHandler: ^(NSString* output, NSError* error) {
+                        if (output) {
+                            NSLog(@"%@", output);
+                        }
+                        if (error) {
+                            NSLog(@"Error calling OAIDefaultApi->indexImage: %@", error);
+                        }
+                    }];
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **modelId** | **NSString***| Model ID | 
+ **file** | **NSURL*****NSURL***|  | [optional] 
+
+### Return type
+
+**NSString***
+
+### Authorization
+
+[x-api-key](../README.md#x-api-key)
+
+### HTTP request headers
+
+ - **Content-Type**: multipart/form-data
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
