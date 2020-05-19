@@ -23,6 +23,10 @@
 @interface OAIInlineObject : OAIObject
 
 
-@property(nonatomic) NSURL* file;
+@property(nonatomic) NSString* imageUrl;
+
+@property(nonatomic) NSString* tag;
+
+@property(nonatomic) NSString* modelId;
 
 @end

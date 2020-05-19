@@ -1,6 +1,7 @@
 #import "OAIDefaultApi.h"
 #import "OAIQueryParamCollection.h"
 #import "OAIApiClient.h"
+#import "OAIInlineObject.h"
 
 
 @interface OAIDefaultApi ()
@@ -239,33 +240,19 @@ NSInteger kOAIDefaultApiMissingParamErrorCode = 234513;
 ///
 /// Index by Using Image URL
 /// Index by Using Image URL
-///  @param modelId Model ID 
+///  @param inlineObject  
 ///
-///  @param imageUrl Image URL 
+///  @returns void
 ///
-///  @returns NSString*
-///
--(NSURLSessionTask*) indexByImageUrlWithModelId: (NSString*) modelId
-    imageUrl: (NSString*) imageUrl
-    completionHandler: (void (^)(NSString* output, NSError* error)) handler {
-    // verify the required parameter 'modelId' is set
-    if (modelId == nil) {
-        NSParameterAssert(modelId);
+-(NSURLSessionTask*) indexByImageUrlWithInlineObject: (OAIInlineObject*) inlineObject
+    completionHandler: (void (^)(NSError* error)) handler {
+    // verify the required parameter 'inlineObject' is set
+    if (inlineObject == nil) {
+        NSParameterAssert(inlineObject);
         if(handler) {
-            NSDictionary * userInfo = @{NSLocalizedDescriptionKey : [NSString stringWithFormat:NSLocalizedString(@"Missing required parameter '%@'", nil),@"modelId"] };
+            NSDictionary * userInfo = @{NSLocalizedDescriptionKey : [NSString stringWithFormat:NSLocalizedString(@"Missing required parameter '%@'", nil),@"inlineObject"] };
             NSError* error = [NSError errorWithDomain:kOAIDefaultApiErrorDomain code:kOAIDefaultApiMissingParamErrorCode userInfo:userInfo];
-            handler(nil, error);
-        }
-        return nil;
-    }
-
-    // verify the required parameter 'imageUrl' is set
-    if (imageUrl == nil) {
-        NSParameterAssert(imageUrl);
-        if(handler) {
-            NSDictionary * userInfo = @{NSLocalizedDescriptionKey : [NSString stringWithFormat:NSLocalizedString(@"Missing required parameter '%@'", nil),@"imageUrl"] };
-            NSError* error = [NSError errorWithDomain:kOAIDefaultApiErrorDomain code:kOAIDefaultApiMissingParamErrorCode userInfo:userInfo];
-            handler(nil, error);
+            handler(error);
         }
         return nil;
     }
@@ -275,16 +262,10 @@ NSInteger kOAIDefaultApiMissingParamErrorCode = 234513;
     NSMutableDictionary *pathParams = [[NSMutableDictionary alloc] init];
 
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
-    if (modelId != nil) {
-        queryParams[@"model_id"] = modelId;
-    }
-    if (imageUrl != nil) {
-        queryParams[@"image_url"] = imageUrl;
-    }
     NSMutableDictionary* headerParams = [NSMutableDictionary dictionaryWithDictionary:self.apiClient.configuration.defaultHeaders];
     [headerParams addEntriesFromDictionary:self.defaultHeaders];
     // HTTP header `Accept`
-    NSString *acceptHeader = [self.apiClient.sanitizer selectHeaderAccept:@[@"application/json"]];
+    NSString *acceptHeader = [self.apiClient.sanitizer selectHeaderAccept:@[]];
     if(acceptHeader.length > 0) {
         headerParams[@"Accept"] = acceptHeader;
     }
@@ -293,7 +274,7 @@ NSInteger kOAIDefaultApiMissingParamErrorCode = 234513;
     NSString *responseContentType = [[acceptHeader componentsSeparatedByString:@", "] firstObject] ?: @"";
 
     // request content type
-    NSString *requestContentType = [self.apiClient.sanitizer selectHeaderContentType:@[]];
+    NSString *requestContentType = [self.apiClient.sanitizer selectHeaderContentType:@[@"application/json"]];
 
     // Authentication setting
     NSArray *authSettings = @[@"x-api-key"];
@@ -301,9 +282,10 @@ NSInteger kOAIDefaultApiMissingParamErrorCode = 234513;
     id bodyParam = nil;
     NSMutableDictionary *formParams = [[NSMutableDictionary alloc] init];
     NSMutableDictionary *localVarFiles = [[NSMutableDictionary alloc] init];
+    bodyParam = inlineObject;
 
     return [self.apiClient requestWithPath: resourcePath
-                                    method: @"GET"
+                                    method: @"POST"
                                 pathParams: pathParams
                                queryParams: queryParams
                                 formParams: formParams
@@ -313,10 +295,10 @@ NSInteger kOAIDefaultApiMissingParamErrorCode = 234513;
                               authSettings: authSettings
                         requestContentType: requestContentType
                        responseContentType: responseContentType
-                              responseType: @"NSString*"
+                              responseType: nil
                            completionBlock: ^(id data, NSError *error) {
                                 if(handler) {
-                                    handler((NSString*)data, error);
+                                    handler(error);
                                 }
                             }];
 }
@@ -324,34 +306,23 @@ NSInteger kOAIDefaultApiMissingParamErrorCode = 234513;
 ///
 /// Index Local Image
 /// Index Local Image
-///  @param modelId Model ID 
+///  @param modelId  (optional)
+///
+///  @param tag  (optional)
 ///
 ///  @param file  (optional)
 ///
 ///  @returns NSString*
 ///
 -(NSURLSessionTask*) indexImageWithModelId: (NSString*) modelId
+    tag: (NSString*) tag
     file: (NSURL*) file
     completionHandler: (void (^)(NSString* output, NSError* error)) handler {
-    // verify the required parameter 'modelId' is set
-    if (modelId == nil) {
-        NSParameterAssert(modelId);
-        if(handler) {
-            NSDictionary * userInfo = @{NSLocalizedDescriptionKey : [NSString stringWithFormat:NSLocalizedString(@"Missing required parameter '%@'", nil),@"modelId"] };
-            NSError* error = [NSError errorWithDomain:kOAIDefaultApiErrorDomain code:kOAIDefaultApiMissingParamErrorCode userInfo:userInfo];
-            handler(nil, error);
-        }
-        return nil;
-    }
-
     NSMutableString* resourcePath = [NSMutableString stringWithFormat:@"/index_image"];
 
     NSMutableDictionary *pathParams = [[NSMutableDictionary alloc] init];
 
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
-    if (modelId != nil) {
-        queryParams[@"model_id"] = modelId;
-    }
     NSMutableDictionary* headerParams = [NSMutableDictionary dictionaryWithDictionary:self.apiClient.configuration.defaultHeaders];
     [headerParams addEntriesFromDictionary:self.defaultHeaders];
     // HTTP header `Accept`
@@ -372,6 +343,12 @@ NSInteger kOAIDefaultApiMissingParamErrorCode = 234513;
     id bodyParam = nil;
     NSMutableDictionary *formParams = [[NSMutableDictionary alloc] init];
     NSMutableDictionary *localVarFiles = [[NSMutableDictionary alloc] init];
+    if (modelId) {
+        formParams[@"model_id"] = modelId;
+    }
+    if (tag) {
+        formParams[@"tag"] = tag;
+    }
     localVarFiles[@"file"] = file;
 
     return [self.apiClient requestWithPath: resourcePath
@@ -481,34 +458,20 @@ NSInteger kOAIDefaultApiMissingParamErrorCode = 234513;
 ///
 /// Predict by Image
 /// Send a local image to tag
-///  @param modelId Type your trained model id to predict. You get your model's id from Classify Dashboard. 
-///
 ///  @param file  (optional)
+///
+///  @param modelId  (optional)
 ///
 ///  @returns void
 ///
--(NSURLSessionTask*) tagLocalImageWithModelId: (NSString*) modelId
-    file: (NSURL*) file
+-(NSURLSessionTask*) tagLocalImageWithFile: (NSURL*) file
+    modelId: (NSString*) modelId
     completionHandler: (void (^)(NSError* error)) handler {
-    // verify the required parameter 'modelId' is set
-    if (modelId == nil) {
-        NSParameterAssert(modelId);
-        if(handler) {
-            NSDictionary * userInfo = @{NSLocalizedDescriptionKey : [NSString stringWithFormat:NSLocalizedString(@"Missing required parameter '%@'", nil),@"modelId"] };
-            NSError* error = [NSError errorWithDomain:kOAIDefaultApiErrorDomain code:kOAIDefaultApiMissingParamErrorCode userInfo:userInfo];
-            handler(error);
-        }
-        return nil;
-    }
-
     NSMutableString* resourcePath = [NSMutableString stringWithFormat:@"/predict"];
 
     NSMutableDictionary *pathParams = [[NSMutableDictionary alloc] init];
 
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
-    if (modelId != nil) {
-        queryParams[@"model_id"] = modelId;
-    }
     NSMutableDictionary* headerParams = [NSMutableDictionary dictionaryWithDictionary:self.apiClient.configuration.defaultHeaders];
     [headerParams addEntriesFromDictionary:self.defaultHeaders];
     // HTTP header `Accept`
@@ -530,6 +493,9 @@ NSInteger kOAIDefaultApiMissingParamErrorCode = 234513;
     NSMutableDictionary *formParams = [[NSMutableDictionary alloc] init];
     NSMutableDictionary *localVarFiles = [[NSMutableDictionary alloc] init];
     localVarFiles[@"file"] = file;
+    if (modelId) {
+        formParams[@"model_id"] = modelId;
+    }
 
     return [self.apiClient requestWithPath: resourcePath
                                     method: @"POST"

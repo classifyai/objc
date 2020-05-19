@@ -1,4 +1,5 @@
 #import <Foundation/Foundation.h>
+#import "OAIInlineObject.h"
 #import "OAIApi.h"
 
 /**
@@ -65,23 +66,22 @@ extern NSInteger kOAIDefaultApiMissingParamErrorCode;
 /// Index by Using Image URL
 /// Index by Using Image URL
 ///
-/// @param modelId Model ID
-/// @param imageUrl Image URL
+/// @param inlineObject 
 /// 
 ///  code:200 message:"Image Indexed",
 ///  code:400 message:"Bad request, parameter or format error. Please check your query, image format and image size.",
 ///  code:401 message:"You are not authorized for this operation."
 ///
-/// @return NSString*
--(NSURLSessionTask*) indexByImageUrlWithModelId: (NSString*) modelId
-    imageUrl: (NSString*) imageUrl
-    completionHandler: (void (^)(NSString* output, NSError* error)) handler;
+/// @return void
+-(NSURLSessionTask*) indexByImageUrlWithInlineObject: (OAIInlineObject*) inlineObject
+    completionHandler: (void (^)(NSError* error)) handler;
 
 
 /// Index Local Image
 /// Index Local Image
 ///
-/// @param modelId Model ID
+/// @param modelId  (optional)
+/// @param tag  (optional)
 /// @param file  (optional)
 /// 
 ///  code:200 message:"Image Indexed",
@@ -90,6 +90,7 @@ extern NSInteger kOAIDefaultApiMissingParamErrorCode;
 ///
 /// @return NSString*
 -(NSURLSessionTask*) indexImageWithModelId: (NSString*) modelId
+    tag: (NSString*) tag
     file: (NSURL*) file
     completionHandler: (void (^)(NSString* output, NSError* error)) handler;
 
@@ -113,16 +114,16 @@ extern NSInteger kOAIDefaultApiMissingParamErrorCode;
 /// Predict by Image
 /// Send a local image to tag
 ///
-/// @param modelId Type your trained model id to predict. You get your model&#39;s id from Classify Dashboard.
 /// @param file  (optional)
+/// @param modelId  (optional)
 /// 
 ///  code:200 message:"Custom trained model prediction response.",
 ///  code:400 message:"Bad request, parameter or format error. Please check your query, image format and image size.",
 ///  code:401 message:"You are not authorized for this operation."
 ///
 /// @return void
--(NSURLSessionTask*) tagLocalImageWithModelId: (NSString*) modelId
-    file: (NSURL*) file
+-(NSURLSessionTask*) tagLocalImageWithFile: (NSURL*) file
+    modelId: (NSString*) modelId
     completionHandler: (void (^)(NSError* error)) handler;
 
 

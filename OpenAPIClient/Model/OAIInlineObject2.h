@@ -17,16 +17,14 @@
 
 
 
-@protocol OAIInlineObject1
+@protocol OAIInlineObject2
 @end
 
-@interface OAIInlineObject1 : OAIObject
+@interface OAIInlineObject2 : OAIObject
 
-
-@property(nonatomic) NSString* modelId;
-
-@property(nonatomic) NSString* tag;
 
 @property(nonatomic) NSURL* file;
+
+@property(nonatomic) NSString* modelId;
 
 @end

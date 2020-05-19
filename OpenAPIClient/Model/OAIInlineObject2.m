@@ -1,6 +1,6 @@
-#import "OAIInlineObject1.h"
+#import "OAIInlineObject2.h"
 
-@implementation OAIInlineObject1
+@implementation OAIInlineObject2
 
 - (instancetype)init {
   self = [super init];
@@ -17,7 +17,7 @@
  * This method is used by `JSONModel`.
  */
 + (JSONKeyMapper *)keyMapper {
-  return [[JSONKeyMapper alloc] initWithModelToJSONDictionary:@{ @"modelId": @"model_id", @"tag": @"tag", @"file": @"file" }];
+  return [[JSONKeyMapper alloc] initWithModelToJSONDictionary:@{ @"file": @"file", @"modelId": @"model_id" }];
 }
 
 /**
@@ -27,7 +27,7 @@
  */
 + (BOOL)propertyIsOptional:(NSString *)propertyName {
 
-  NSArray *optionalProperties = @[@"modelId", @"tag", @"file"];
+  NSArray *optionalProperties = @[@"file", @"modelId"];
   return [optionalProperties containsObject:propertyName];
 }
 

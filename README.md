@@ -43,6 +43,7 @@ Import the following:
 // load models
 #import <OpenAPIClient/OAIInlineObject.h>
 #import <OpenAPIClient/OAIInlineObject1.h>
+#import <OpenAPIClient/OAIInlineObject2.h>
 // load API classes for accessing endpoints
 #import <OpenAPIClient/OAIDefaultApi.h>
 
@@ -89,7 +90,7 @@ Class | Method | HTTP request | Description
 *OAIDefaultApi* | [**createNewModel**](docs/OAIDefaultApi.md#createnewmodel) | **PUT** /models | Create New Model
 *OAIDefaultApi* | [**deleteModel**](docs/OAIDefaultApi.md#deletemodel) | **DELETE** /models | Delete Model
 *OAIDefaultApi* | [**getModelsList**](docs/OAIDefaultApi.md#getmodelslist) | **GET** /models | Get Models List
-*OAIDefaultApi* | [**indexByImageUrl**](docs/OAIDefaultApi.md#indexbyimageurl) | **GET** /index_by_image_url | Index by Using Image URL
+*OAIDefaultApi* | [**indexByImageUrl**](docs/OAIDefaultApi.md#indexbyimageurl) | **POST** /index_by_image_url | Index by Using Image URL
 *OAIDefaultApi* | [**indexImage**](docs/OAIDefaultApi.md#indeximage) | **POST** /index_image | Index Local Image
 *OAIDefaultApi* | [**tagImageByUrl**](docs/OAIDefaultApi.md#tagimagebyurl) | **GET** /predict_by_image_url | Tag Image by Using Image Url
 *OAIDefaultApi* | [**tagLocalImage**](docs/OAIDefaultApi.md#taglocalimage) | **POST** /predict | Predict by Image
@@ -100,6 +101,7 @@ Class | Method | HTTP request | Description
 
  - [OAIInlineObject](docs/OAIInlineObject.md)
  - [OAIInlineObject1](docs/OAIInlineObject1.md)
+ - [OAIInlineObject2](docs/OAIInlineObject2.md)
 
 
 ## Documentation For Authorization

@@ -7,7 +7,7 @@ Method | HTTP request | Description
 [**createNewModel**](OAIDefaultApi.md#createnewmodel) | **PUT** /models | Create New Model
 [**deleteModel**](OAIDefaultApi.md#deletemodel) | **DELETE** /models | Delete Model
 [**getModelsList**](OAIDefaultApi.md#getmodelslist) | **GET** /models | Get Models List
-[**indexByImageUrl**](OAIDefaultApi.md#indexbyimageurl) | **GET** /index_by_image_url | Index by Using Image URL
+[**indexByImageUrl**](OAIDefaultApi.md#indexbyimageurl) | **POST** /index_by_image_url | Index by Using Image URL
 [**indexImage**](OAIDefaultApi.md#indeximage) | **POST** /index_image | Index Local Image
 [**tagImageByUrl**](OAIDefaultApi.md#tagimagebyurl) | **GET** /predict_by_image_url | Tag Image by Using Image Url
 [**tagLocalImage**](OAIDefaultApi.md#taglocalimage) | **POST** /predict | Predict by Image
@@ -177,9 +177,8 @@ This endpoint does not need any parameter.
 
 # **indexByImageUrl**
 ```objc
--(NSURLSessionTask*) indexByImageUrlWithModelId: (NSString*) modelId
-    imageUrl: (NSString*) imageUrl
-        completionHandler: (void (^)(NSString* output, NSError* error)) handler;
+-(NSURLSessionTask*) indexByImageUrlWithInlineObject: (OAIInlineObject*) inlineObject
+        completionHandler: (void (^)(NSError* error)) handler;
 ```
 
 Index by Using Image URL
@@ -196,18 +195,13 @@ OAIDefaultConfiguration *apiConfig = [OAIDefaultConfiguration sharedConfig];
 //[apiConfig setApiKeyPrefix:@"Bearer" forApiKeyIdentifier:@"x-api-key"];
 
 
-NSString* modelId = @"modelId_example"; // Model ID
-NSString* imageUrl = @"imageUrl_example"; // Image URL
+OAIInlineObject* inlineObject = [[OAIInlineObject alloc] init]; // 
 
 OAIDefaultApi*apiInstance = [[OAIDefaultApi alloc] init];
 
 // Index by Using Image URL
-[apiInstance indexByImageUrlWithModelId:modelId
-              imageUrl:imageUrl
-          completionHandler: ^(NSString* output, NSError* error) {
-                        if (output) {
-                            NSLog(@"%@", output);
-                        }
+[apiInstance indexByImageUrlWithInlineObject:inlineObject
+          completionHandler: ^(NSError* error) {
                         if (error) {
                             NSLog(@"Error calling OAIDefaultApi->indexByImageUrl: %@", error);
                         }
@@ -218,12 +212,11 @@ OAIDefaultApi*apiInstance = [[OAIDefaultApi alloc] init];
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **modelId** | **NSString***| Model ID | 
- **imageUrl** | **NSString***| Image URL | 
+ **inlineObject** | [**OAIInlineObject***](OAIInlineObject.md)|  | 
 
 ### Return type
 
-**NSString***
+void (empty response body)
 
 ### Authorization
 
@@ -231,14 +224,15 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/json
+ - **Content-Type**: application/json
+ - **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **indexImage**
 ```objc
 -(NSURLSessionTask*) indexImageWithModelId: (NSString*) modelId
+    tag: (NSString*) tag
     file: (NSURL*) file
         completionHandler: (void (^)(NSString* output, NSError* error)) handler;
 ```
@@ -257,13 +251,15 @@ OAIDefaultConfiguration *apiConfig = [OAIDefaultConfiguration sharedConfig];
 //[apiConfig setApiKeyPrefix:@"Bearer" forApiKeyIdentifier:@"x-api-key"];
 
 
-NSString* modelId = @"modelId_example"; // Model ID
+NSString* modelId = @"modelId_example"; //  (optional)
+NSString* tag = @"tag_example"; //  (optional)
 NSURL* file = [NSURL fileURLWithPath:@"/path/to/file"]; //  (optional)
 
 OAIDefaultApi*apiInstance = [[OAIDefaultApi alloc] init];
 
 // Index Local Image
 [apiInstance indexImageWithModelId:modelId
+              tag:tag
               file:file
           completionHandler: ^(NSString* output, NSError* error) {
                         if (output) {
@@ -279,7 +275,8 @@ OAIDefaultApi*apiInstance = [[OAIDefaultApi alloc] init];
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **modelId** | **NSString***| Model ID | 
+ **modelId** | **NSString***|  | [optional] 
+ **tag** | **NSString***|  | [optional] 
  **file** | **NSURL*****NSURL***|  | [optional] 
 
 ### Return type
@@ -357,8 +354,8 @@ void (empty response body)
 
 # **tagLocalImage**
 ```objc
--(NSURLSessionTask*) tagLocalImageWithModelId: (NSString*) modelId
-    file: (NSURL*) file
+-(NSURLSessionTask*) tagLocalImageWithFile: (NSURL*) file
+    modelId: (NSString*) modelId
         completionHandler: (void (^)(NSError* error)) handler;
 ```
 
@@ -376,14 +373,14 @@ OAIDefaultConfiguration *apiConfig = [OAIDefaultConfiguration sharedConfig];
 //[apiConfig setApiKeyPrefix:@"Bearer" forApiKeyIdentifier:@"x-api-key"];
 
 
-NSString* modelId = @"modelId_example"; // Type your trained model id to predict. You get your model's id from Classify Dashboard.
 NSURL* file = [NSURL fileURLWithPath:@"/path/to/file"]; //  (optional)
+NSString* modelId = @"modelId_example"; //  (optional)
 
 OAIDefaultApi*apiInstance = [[OAIDefaultApi alloc] init];
 
 // Predict by Image
-[apiInstance tagLocalImageWithModelId:modelId
-              file:file
+[apiInstance tagLocalImageWithFile:file
+              modelId:modelId
           completionHandler: ^(NSError* error) {
                         if (error) {
                             NSLog(@"Error calling OAIDefaultApi->tagLocalImage: %@", error);
@@ -395,8 +392,8 @@ OAIDefaultApi*apiInstance = [[OAIDefaultApi alloc] init];
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **modelId** | **NSString***| Type your trained model id to predict. You get your model&#39;s id from Classify Dashboard. | 
  **file** | **NSURL*****NSURL***|  | [optional] 
+ **modelId** | **NSString***|  | [optional] 
 
 ### Return type
 
